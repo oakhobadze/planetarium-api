@@ -1,0 +1,64 @@
+[
+    {
+        "model": "planetarium_api.planetariumdome",
+        "pk": 1,
+        "fields": {
+            "name": "Main Dome",
+            "rows": 10,
+            "seats_in_row": 15
+        }
+    },
+    {
+        "model": "planetarium_api.showtime",
+        "pk": 1,
+        "fields": {
+            "name": "Evening Show"
+        }
+    },
+    {
+        "model": "planetarium_api.astronomyshow",
+        "pk": 1,
+        "fields": {
+            "title": "Journey Through the Stars",
+            "description": "A fascinating trip through the cosmos.",
+            "show_times": [1]
+        }
+    },
+    {
+        "model": "planetarium_api.showsession",
+        "pk": 1,
+        "fields": {
+            "astronomy_show": 1,
+            "planetarium_dome": 1,
+            "show_time": "2025-06-15T19:00:00Z"
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "username": "testuser",
+            "password": "pbkdf2_sha256$260000$examplehash",
+            "is_superuser": false,
+            "is_staff": false
+        }
+    },
+    {
+        "model": "planetarium_api.reservation",
+        "pk": 1,
+        "fields": {
+            "created_at": "2025-06-10T12:00:00Z",
+            "user": 1
+        }
+    },
+    {
+        "model": "planetarium_api.ticket",
+        "pk": 1,
+        "fields": {
+            "row": 3,
+            "seat": 5,
+            "show_session": 1,
+            "reservation": 1
+        }
+    }
+]
