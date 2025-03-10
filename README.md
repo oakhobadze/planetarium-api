@@ -5,6 +5,9 @@ This system allows visitors to book tickets online for their favorite sessions a
 
 ✨ Features
 ✅ Easy Online Booking – Choose your session and book tickets effortlessly.
+
 ✅ Real-Time Availability – Check seat availability for different shows.
+
 ✅ User-Friendly Interface – Simple and intuitive design for all users.
+
 ✅ Secure Payments – Hassle-free and safe transaction options.
