@@ -38,7 +38,7 @@ class PlanetariumDome(models.Model):
         return self.name
 
 
-class ShowTime(models.Model):
+class ShowTheme(models.Model):
     name = models.CharField(max_length=100)
 
     def __str__(self):
@@ -48,7 +48,7 @@ class ShowTime(models.Model):
 class AstronomyShow(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
-    show_times = models.ManyToManyField(ShowTime, related_name="astronomy_shows")
+    show_themes = models.ManyToManyField(ShowTheme, related_name="astronomy_shows")
 
     def __str__(self):
         return self.title
