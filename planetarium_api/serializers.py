@@ -26,6 +26,7 @@ class ReservationSerializer(serializers.ModelSerializer):
 
 class TicketSerializer(serializers.ModelSerializer):
     reservation = serializers.SerializerMethodField()
+    show_session = serializers.PrimaryKeyRelatedField(queryset=ShowSession.objects.all())
 
     class Meta:
         model = Ticket
@@ -33,6 +34,27 @@ class TicketSerializer(serializers.ModelSerializer):
 
     def get_reservation(self, obj):
         return obj.reservation.user.username
+
+    def validate(self, data):
+        row = data.get('row')
+        seat = data.get('seat')
+        show_session = data.get('show_session')
+
+        if not show_session:
+            raise serializers.ValidationError("You need to select a session")
+
+        planetarium_dome = show_session.planetarium_dome
+
+        if row is not None and (row < 1 or row > planetarium_dome.rows):
+            raise serializers.ValidationError(f"Row must be from 1 to {planetarium_dome.rows}.")
+
+        if seat is not None and (seat < 1 or seat > planetarium_dome.seats_in_row):
+            raise serializers.ValidationError(f"Seat must be from 1 to {planetarium_dome.seats_in_row}.")
+
+        if Ticket.objects.filter(show_session=show_session, row=row, seat=seat).exists():
+            raise serializers.ValidationError("This seat is already booked for the selected session.")
+
+        return data
 
 
 class PlanetariumDomeSerializer(serializers.ModelSerializer):
