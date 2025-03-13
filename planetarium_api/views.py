@@ -1,5 +1,10 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from django.contrib.auth.models import User
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.settings import api_settings
+
 from .models import Reservation, Ticket, ShowSession, PlanetariumDome, ShowTheme, AstronomyShow
 from .serializers import (
     UserSerializer, ReservationSerializer, TicketSerializer,
@@ -10,6 +15,23 @@ from .serializers import (
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+
+class UserRegister(generics.CreateAPIView):
+    serializer_class = UserSerializer
+
+
+class UserLogin(ObtainAuthToken):
+    renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
+
+
+class ManageUserView(generics.RetrieveUpdateAPIView):
+    serializer_class = UserSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def get_object(self):
+        return self.request.user
 
 
 class ReservationViewSet(viewsets.ReadOnlyModelViewSet):
@@ -23,6 +45,8 @@ class ReservationViewSet(viewsets.ReadOnlyModelViewSet):
 class TicketViewSet(viewsets.ModelViewSet):
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     def perform_create(self, serializer):
         reservation, created = Reservation.objects.get_or_create(user=self.request.user)
