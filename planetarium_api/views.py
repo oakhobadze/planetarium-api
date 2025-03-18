@@ -1,7 +1,5 @@
 from rest_framework import viewsets, generics
 from django.contrib.auth.models import User
-from rest_framework.authentication import TokenAuthentication
-from .authentication import CustomTokenAuthentication
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.settings import api_settings
@@ -28,7 +26,6 @@ class UserLogin(ObtainAuthToken):
 
 class ManageUserView(generics.RetrieveUpdateAPIView):
     serializer_class = UserSerializer
-#    authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
     def get_object(self):
@@ -46,7 +43,6 @@ class ReservationViewSet(viewsets.ReadOnlyModelViewSet):
 class TicketViewSet(viewsets.ModelViewSet):
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
-#    authentication_classes = (CustomTokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
     def perform_create(self, serializer):
@@ -57,26 +53,22 @@ class TicketViewSet(viewsets.ModelViewSet):
 class ShowSessionViewSet(viewsets.ModelViewSet):
     queryset = ShowSession.objects.all()
     serializer_class = ShowSessionSerializer
-#    authentication_classes = (CustomTokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
 
 class PlanetariumDomeViewSet(viewsets.ModelViewSet):
     queryset = PlanetariumDome.objects.all()
     serializer_class = PlanetariumDomeSerializer
-#    authentication_classes = (CustomTokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
 
 class ShowThemeViewSet(viewsets.ModelViewSet):
     queryset = ShowTheme.objects.all()
     serializer_class = ShowThemeSerializer
-#    authentication_classes = (CustomTokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
 
 class AstronomyShowViewSet(viewsets.ModelViewSet):
     queryset = AstronomyShow.objects.all()
     serializer_class = AstronomyShowSerializer
-#    authentication_classes = (CustomTokenAuthentication,)
     permission_classes = (IsAuthenticated,)
