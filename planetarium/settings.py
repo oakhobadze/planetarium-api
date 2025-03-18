@@ -14,7 +14,6 @@ import os
 from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv
-import dj_database_url
 
 
 load_dotenv()
@@ -89,8 +88,8 @@ DATABASES = {
         "NAME": os.environ["POSTGRES_DB"],
         "USER": os.environ["POSTGRES_USER"],
         "PASSWORD": os.environ["POSTGRES_PASSWORD"],
-        "HOST": os.environ["POSTGRES_HOST"],
-        "PORT": os.environ["POSTGRES_PORT"],
+        "HOST": 'db',
+        "PORT": '5432',
         'OPTIONS': {'client_encoding': 'UTF8'},
     }
 }
